@@ -1,3 +1,5 @@
+// check pass user modules from class
+// modify
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -7,7 +9,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true }
 });
 
-// Hash password before save
+
 userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 10);
 });

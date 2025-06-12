@@ -1,3 +1,4 @@
+// check last class middleware
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {

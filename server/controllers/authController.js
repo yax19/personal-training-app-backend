@@ -11,6 +11,7 @@ exports.signup = async (req, res) => {
   }
 };
 
+//remember no easy hits for hackers so "invaid credentials" and not spcify which one is wrong
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -18,6 +19,7 @@ exports.login = async (req, res) => {
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ msg: 'Invalid credentials' });
   }
+
 
   const token = jwt.sign({ id: user._id }, 'secret');
   res.json({ msg: 'Login successful', user, token });
