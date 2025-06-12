@@ -18,8 +18,10 @@ app.use(express.json());
 app.use(logger('dev'));
 
 // Routes go here
-app.use('/api/auth', require('./server/routes/auth'));
-app.use('/api/workouts', require('./server/routes/workouts'));
+
+app.use('/api/auth', require('./serve/routes/auth'));
+app.use('/api/workouts', require('./serve/routes/workouts'));
+
 // routes above are not working properly fix soon 
 
 app.listen(3000, () => {
