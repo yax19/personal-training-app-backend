@@ -3,6 +3,7 @@ dotenv.config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // need more research on logger/morgam
 const logger = require('morgan');
@@ -16,6 +17,7 @@ mongoose.connection.on('connected', () => {
 
 app.use(express.json());
 app.use(logger('dev'));
+app.use(cors())
 
 // Routes go here
 
