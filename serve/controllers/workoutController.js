@@ -6,6 +6,16 @@ exports.getWorkouts = async (req, res) => {
 };
 
 exports.addWorkout = async (req, res) => {
-  const workout = await Workout.create({ ...req.body, userId: req.userId });
-  res.json(workout);
+  const { name, type, sets, reps, duration } = req.body;
+  const newWorkout = new Workout({
+    userId: req.userId,
+    name,
+    type,
+    sets,
+    reps,
+    duration
+  });
+
+  await newWorkout.save();
+  res.status(201).json(newWorkout);
 };

@@ -1,15 +1,16 @@
-// check last class middleware
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ msg: 'No token' });
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(' ')[1];
+
+  if (!token) return res.status(401).json({ msg: 'No token provided' });
 
   try {
-    const decoded = jwt.verify(token, 'secret');
+    const decoded = jwt.verify(token, 'secret'); // Same secret as used in login
     req.userId = decoded.id;
     next();
-  } catch {
-    res.status(401).json({ msg: 'Invalid token' });
+  } catch (err) {
+    return res.status(401).json({ msg: 'Invalid token' });
   }
 };
