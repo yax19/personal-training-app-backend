@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // // Routes
 app.use('/api/auth', require('./routes/auth'));      
-// app.use('/api/workouts', require('./routes/workouts')); 
+app.use('/api/workouts', require('./routes/workouts'));
 
 // Start server
 app.listen(PORT, () => {

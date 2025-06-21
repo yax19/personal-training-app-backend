@@ -43,3 +43,24 @@ exports.signinUser = async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 };
+
+exports.createWorkout = async (req, res) => {
+  const { name, type, sets, reps, duration } = req.body;
+  try {
+    const workout = await Workout.create({
+      name, type, sets, reps, duration, user: req.userId
+    });
+    res.status(201).json(workout);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error creating workout' });
+  }
+};
+
+exports.getWorkouts = async (req, res) => {
+  try {
+    const workouts = await Workout.find({ user: req.userId });
+    res.json(workouts);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error loading workouts' });
+  }
+};
