@@ -35,6 +35,25 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const updated = await Workout.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        type: req.body.type,
+        sets: req.body.sets,
+        reps: req.body.reps,
+        duration: req.body.duration
+      },
+      { new: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ msg: 'Failed to update workout' });
+  }
+});
+
 
 // DELETE: Delete a workout by ID
 router.delete('/:id', auth, async (req, res) => {
