@@ -23,6 +23,7 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+
 // Get all workouts for the logged-in user
 router.get('/', auth, async (req, res) => {
   try {
@@ -33,5 +34,25 @@ router.get('/', auth, async (req, res) => {
     res.status(500).json({ msg: 'Failed to fetch workouts' });
   }
 });
+
+
+// DELETE: Delete a workout by ID
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const deleted = await Workout.findOneAndDelete({
+      _id: req.params.id,
+      user: req.userId // make sure only the owner can delete
+    });
+
+    if (!deleted) {
+      return res.status(404).json({ msg: 'Workout not found or not authorized' });
+    }
+
+    res.json({ msg: 'Workout deleted' });
+  } catch (err) {
+    console.error('Error deleting workout:', err);
+    res.status(500).json({ msg: 'Server error deleting workout' });
+  }
+})
 
 module.exports = router;
